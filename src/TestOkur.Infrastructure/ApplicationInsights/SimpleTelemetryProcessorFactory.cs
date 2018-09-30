@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Infrastructure.ApplicationInsight
+﻿namespace TestOkur.Infrastructure.ApplicationInsights
 {
     using Microsoft.ApplicationInsights.AspNetCore;
     using Microsoft.ApplicationInsights.Extensibility;

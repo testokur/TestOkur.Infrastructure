@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Infrastructure.ApplicationInsight
+﻿namespace TestOkur.Infrastructure.ApplicationInsights
 {
     using System;
     using System.Collections.Generic;
