@@ -8,6 +8,8 @@
             where TBuilder : IQueryProcessorExtensionBuilder
         {
             builder.RegisterDecorator(typeof(CacheQueryResultDecorator<,>));
+            builder.RegisterDecorator(typeof(PopulateQueryDecorator<,>));
+
             return builder;
         }
     }
