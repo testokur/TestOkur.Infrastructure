@@ -14,7 +14,7 @@
                             m.GetParameters().Any(p => p.ParameterType.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)));
 
             var applicableTypes = Assembly
-                .GetExecutingAssembly()
+                .GetCallingAssembly()
                 .GetTypes()
                 .Where(c => c.IsClass && !c.IsAbstract && !c.ContainsGenericParameters);
 
