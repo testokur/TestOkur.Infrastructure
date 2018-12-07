@@ -44,21 +44,25 @@
             }
 
             var result = await next(query, cancellationToken);
-
-            if (cacheQuery != null)
-            {
-                _cacheManager.Add(new CacheItem<object>(
-                    cacheQuery.CacheKey,
-                    result,
-                    ExpirationMode.Absolute,
-                    cacheQuery.CacheDuration));
-            }
+            AddToCache(cacheQuery, result);
 
             return result;
         }
 
         public void InitializeFromAttributeParams(object[] attributeParams)
         {
+        }
+
+        private void AddToCache<TResult>(ICacheResult query, TResult result)
+        {
+            if (query != null)
+            {
+                _cacheManager.Add(new CacheItem<object>(
+                    query.CacheKey,
+                    result,
+                    ExpirationMode.Absolute,
+                    query.CacheDuration));
+            }
         }
     }
 }
