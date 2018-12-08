@@ -10,6 +10,7 @@
     <RepositoryUrl>https://github.com/NazmiAltun/TestOkur.Infrastructure</RepositoryUrl>
     <FileVersion>1.0.10.0</FileVersion>
     <LangVersion>latest</LangVersion>
+	<ProjectGuid>{B08153AD-88D7-4588-ADF3-88241119EC6E}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <AdditionalFiles Include="$(SolutionDir)\stylecop.json" Link="stylecop.json" />
