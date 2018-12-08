@@ -1,4 +1,7 @@
 version: '{build}'
+image: 
+ - Visual Studio 2017
+configuration: Release
 pull_requests:
   do_not_increment_build_number: true
 environment:
@@ -12,7 +15,8 @@ nuget:
   disable_publish_on_pr: true
 build_script:
 - ps: .\Build.ps1
-test: off
+test_script:
+- ps: .\run-sonar.ps1
 artifacts:
 - path: .\artifacts\**\*.nupkg
   name: NuGet
