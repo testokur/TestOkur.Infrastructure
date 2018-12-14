@@ -1,15 +1,20 @@
 ﻿namespace TestOkur.Infrastructure.CQRS
 {
-    using System;
-    using Paramore.Brighter;
+	using System;
+	using Paramore.Brighter;
 
-    public abstract class CommandBase : Command
-    {
-        protected CommandBase()
-            : base(Guid.NewGuid())
-        {
-        }
+	public abstract class CommandBase : Command
+	{
+		protected CommandBase(Guid id)
+		 : base(id)
+		{
+		}
 
-        public int UserId { get; internal set; }
-    }
+		protected CommandBase()
+			: base(Guid.NewGuid())
+		{
+		}
+
+		public int UserId { get; internal set; }
+	}
 }
