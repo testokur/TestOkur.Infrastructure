@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Infrastructure.CQRS
+﻿namespace TestOkur.Infrastructure.Cqrs
 {
     using System;
     using Paramore.Darker.Attributes;
@@ -11,14 +11,8 @@
         {
         }
 
-        public override object[] GetAttributeParams()
-        {
-            return new object[0];
-        }
+        public override object[] GetAttributeParams() => new object[0];
 
-        public override Type GetDecoratorType()
-        {
-            return typeof(CacheQueryResultDecorator<,>);
-        }
+        public override Type GetDecoratorType() => typeof(CacheQueryResultDecorator<,>);
     }
 }

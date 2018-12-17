@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Infrastructure.CQRS
+﻿namespace TestOkur.Infrastructure.Cqrs
 {
     using System;
     using Paramore.Brighter;
@@ -11,9 +11,6 @@
         {
         }
 
-        public override Type GetHandlerType()
-        {
-            return typeof(ClearCacheDecorator<>);
-        }
+        public override Type GetHandlerType() => typeof(ClearCacheDecorator<>);
     }
 }

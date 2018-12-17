@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Infrastructure.CQRS
+﻿namespace TestOkur.Infrastructure.Cqrs
 {
     using System;
     using System.Threading;

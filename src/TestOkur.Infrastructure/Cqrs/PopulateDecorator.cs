@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Infrastructure.CQRS
+﻿namespace TestOkur.Infrastructure.Cqrs
 {
     using Microsoft.AspNetCore.Http;
     using Paramore.Brighter;

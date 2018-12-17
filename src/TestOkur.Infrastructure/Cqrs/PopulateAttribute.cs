@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Infrastructure.CQRS
+﻿namespace TestOkur.Infrastructure.Cqrs
 {
     using System;
     using Paramore.Brighter;
@@ -11,9 +11,7 @@
         {
         }
 
-        public override Type GetHandlerType()
-        {
-            return typeof(PopulateDecorator<>);
-        }
+        public override Type GetHandlerType() =>
+            typeof(PopulateDecorator<>);
     }
 }

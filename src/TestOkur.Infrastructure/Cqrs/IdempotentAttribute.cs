@@ -1,11 +1,11 @@
-﻿namespace TestOkur.Infrastructure.CQRS
+﻿namespace TestOkur.Infrastructure.Cqrs
 {
 	using System;
 	using Paramore.Brighter;
 
 	[AttributeUsage(AttributeTargets.Method)]
 	public class IdempotentAttribute : RequestHandlerAttribute
-	{
+    {
 		public IdempotentAttribute(int step)
 			: base(step)
 		{
