@@ -1,5 +1,7 @@
-﻿namespace Microsoft.AspNetCore.Http
+﻿namespace TestOkur.Infrastructure.Extensions
 {
+	using Microsoft.AspNetCore.Http;
+
     internal static class IHttpContextAccessorExtensions
     {
         public static int GetUserId(this IHttpContextAccessor httpContextAccessor)

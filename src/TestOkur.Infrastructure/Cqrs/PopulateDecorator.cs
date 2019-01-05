@@ -1,10 +1,11 @@
 ﻿namespace TestOkur.Infrastructure.Cqrs
 {
-    using Microsoft.AspNetCore.Http;
-    using Paramore.Brighter;
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
+	using System;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using Microsoft.AspNetCore.Http;
+	using Paramore.Brighter;
+	using TestOkur.Infrastructure.Extensions;
 
     public class PopulateDecorator<TRequest> : RequestHandlerAsync<TRequest>
         where TRequest : class, IRequest

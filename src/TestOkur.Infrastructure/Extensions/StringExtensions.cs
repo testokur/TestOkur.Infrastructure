@@ -1,8 +1,8 @@
-﻿namespace System
+﻿namespace TestOkur.Infrastructure.Extensions
 {
-    using Text.RegularExpressions;
+	using System.Text.RegularExpressions;
 
-    internal static class StringExtensions
+	internal static class StringExtensions
     {
         public static string ToSnakeCase(this string input)
         {

@@ -1,10 +1,11 @@
 ﻿namespace TestOkur.Infrastructure.Cqrs
 {
-    using Microsoft.AspNetCore.Http;
-    using Paramore.Darker;
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
+	using System;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using Microsoft.AspNetCore.Http;
+	using Paramore.Darker;
+	using TestOkur.Infrastructure.Extensions;
 
     public class PopulateQueryDecorator<TQuery, TResult> : IQueryHandlerDecorator<TQuery, TResult>
         where TQuery : IQuery<TResult>

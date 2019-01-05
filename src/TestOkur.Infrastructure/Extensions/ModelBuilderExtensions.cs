@@ -1,8 +1,9 @@
-﻿namespace Microsoft.EntityFrameworkCore
+﻿namespace TestOkur.Infrastructure.Extensions
 {
-    using System;
+	using System;
+	using Microsoft.EntityFrameworkCore;
 
-    public static class ModelBuilderExtensions
+	public static class ModelBuilderExtensions
     {
         public static void ToSnakeCase(this ModelBuilder modelBuilder)
         {
