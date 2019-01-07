@@ -1,19 +1,24 @@
 ﻿namespace TestOkur.Infrastructure.Cqrs
 {
 	using System;
+	using System.Runtime.Serialization;
 	using Paramore.Brighter;
 
-	public abstract class CommandBase : Command
+	[DataContract]
+	public abstract class CommandBase : ICommand
 	{
 		protected CommandBase(Guid id)
-		 : base(id)
 		{
+			Id = id;
 		}
 
 		protected CommandBase()
-			: base(Guid.NewGuid())
 		{
+			Id = Guid.NewGuid();
 		}
+
+		[DataMember]
+		public Guid Id { get; set; }
 
 		public int UserId { get; internal set; }
 	}
