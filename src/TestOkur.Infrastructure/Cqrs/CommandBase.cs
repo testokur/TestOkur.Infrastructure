@@ -20,6 +20,6 @@
 		[DataMember]
 		public Guid Id { get; set; }
 
-		public Guid UserId { get; internal set; }
+		public int UserId { get; internal set; }
 	}
 }
