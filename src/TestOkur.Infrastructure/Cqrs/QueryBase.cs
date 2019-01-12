@@ -1,7 +1,9 @@
 ﻿namespace TestOkur.Infrastructure.Cqrs
 {
+	using System;
+
     public abstract class QueryBase
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

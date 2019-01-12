@@ -11,10 +11,10 @@
         {
         }
 
-        public override object[] GetAttributeParams() => 
+        public override object[] GetAttributeParams() =>
             new object[0];
 
-        public override Type GetDecoratorType() => 
+        public override Type GetDecoratorType() =>
             typeof(PopulateQueryDecorator<,>);
     }
 }

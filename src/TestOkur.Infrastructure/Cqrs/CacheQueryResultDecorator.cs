@@ -53,7 +53,7 @@
         {
         }
 
-        private void AddToCache<TResult>(ICacheResult query, TResult result)
+        private void AddToCache(ICacheResult query, TResult result)
         {
             if (query != null)
             {
