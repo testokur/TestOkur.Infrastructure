@@ -3,26 +3,23 @@
 	using System;
 	using System.Threading;
 	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Http;
 	using Paramore.Brighter;
-	using TestOkur.Infrastructure.Extensions;
 
-    public class PopulateDecorator<TRequest> : RequestHandlerAsync<TRequest>
+	public class PopulateDecorator<TRequest> : RequestHandlerAsync<TRequest>
         where TRequest : class, IRequest
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUserIdProvider _userIdProvider;
 
-        public PopulateDecorator(IHttpContextAccessor httpContextAccessor)
+        public PopulateDecorator(IUserIdProvider userIdProvider)
         {
-            _httpContextAccessor = httpContextAccessor ??
-                throw new ArgumentNullException(nameof(httpContextAccessor));
-        }
+	        _userIdProvider = userIdProvider ?? throw new ArgumentNullException(nameof(userIdProvider));
+		}
 
-        public override Task<TRequest> HandleAsync(TRequest command, CancellationToken cancellationToken = default)
+		public override Task<TRequest> HandleAsync(TRequest command, CancellationToken cancellationToken = default)
         {
             if (command is CommandBase commandBase)
             {
-                commandBase.UserId = _httpContextAccessor.GetUserId();
+                commandBase.UserId = _userIdProvider.Get();
             }
 
             return base.HandleAsync(command, cancellationToken);

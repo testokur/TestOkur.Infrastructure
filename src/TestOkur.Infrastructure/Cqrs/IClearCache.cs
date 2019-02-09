@@ -1,7 +1,9 @@
 ﻿namespace TestOkur.Infrastructure.Cqrs
 {
+	using System.Collections.Generic;
+
     public interface IClearCache
     {
-        string CacheKey { get; }
+	    IEnumerable<string> CacheKeys { get; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace TestOkur.Infrastructure.Extensions
 {
-	using System;
 	using Microsoft.EntityFrameworkCore;
 
 	public static class ModelBuilderExtensions

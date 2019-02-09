@@ -1,10 +1,11 @@
 ﻿namespace TestOkur.Infrastructure.Cqrs
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using CacheManager.Core;
-    using Paramore.Brighter;
+	using System;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using CacheManager.Core;
+	using Paramore.Brighter;
+	using TestOkur.Infrastructure.Extensions;
 
     public class ClearCacheDecorator<TRequest> : RequestHandlerAsync<TRequest>
         where TRequest : class, IRequest
@@ -20,7 +21,7 @@
         {
             if (command is IClearCache clearCacheCommand)
             {
-                _cacheManager.Remove(clearCacheCommand.CacheKey);
+				clearCacheCommand.CacheKeys.Each(c => _cacheManager.Remove(c));
             }
 
             return base.HandleAsync(command, cancellationToken);

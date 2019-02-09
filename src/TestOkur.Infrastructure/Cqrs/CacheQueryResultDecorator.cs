@@ -51,6 +51,7 @@
 
         public void InitializeFromAttributeParams(object[] attributeParams)
         {
+			//Nothing to do here
         }
 
         private void AddToCache(ICacheResult query, TResult result)
