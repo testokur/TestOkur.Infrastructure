@@ -30,7 +30,7 @@
 		{
 			if (query is QueryBase queryBase)
 			{
-				queryBase.UserId = _userIdProvider.Get();
+				queryBase.UserId = await _userIdProvider.GetAsync();
 			}
 
 			return await next(query, cancellationToken);

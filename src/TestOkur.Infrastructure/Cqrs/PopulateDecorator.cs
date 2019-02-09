@@ -15,14 +15,14 @@
 	        _userIdProvider = userIdProvider ?? throw new ArgumentNullException(nameof(userIdProvider));
 		}
 
-		public override Task<TRequest> HandleAsync(TRequest command, CancellationToken cancellationToken = default)
+		public override async Task<TRequest> HandleAsync(TRequest command, CancellationToken cancellationToken = default)
         {
             if (command is CommandBase commandBase)
             {
-                commandBase.UserId = _userIdProvider.Get();
+                commandBase.UserId = await _userIdProvider.GetAsync();
             }
 
-            return base.HandleAsync(command, cancellationToken);
+            return await base.HandleAsync(command, cancellationToken);
         }
     }
 }

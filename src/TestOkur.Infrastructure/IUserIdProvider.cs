@@ -1,7 +1,9 @@
 ﻿namespace TestOkur.Infrastructure
 {
+	using System.Threading.Tasks;
+
 	public interface IUserIdProvider
 	{
-		int Get();
+		Task<int> GetAsync();
 	}
 }
