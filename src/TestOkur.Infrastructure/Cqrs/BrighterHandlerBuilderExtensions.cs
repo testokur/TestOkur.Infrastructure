@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Infrastructure.Cqrs
 {
-    using System.Reflection;
-    using Paramore.Brighter.AspNetCore;
+	using System.Reflection;
+	using Paramore.Brighter.Extensions.DependencyInjection;
 
-    public static class BrighterHandlerBuilderExtensions
+	public static class BrighterHandlerBuilderExtensions
     {
         public static TBuilder AddPipelineHandlers<TBuilder>(this TBuilder builder)
             where TBuilder : IBrighterHandlerBuilder
