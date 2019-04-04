@@ -13,7 +13,7 @@
 	{
 		private const int ReadChunkBufferLength = 4096;
 
-		private static readonly IEnumerable<string> NoLogResponseTypes =
+		private static readonly IEnumerable<string> NoLogExtensions =
 			new[]
 			{
 			"image/png",
@@ -87,23 +87,23 @@
 
 			var body = response.ContentType;
 
-			if (!NoLogResponseTypes.Contains(response.ContentType))
+			if (!NoLogExtensions.Contains(response.ContentType))
 			{
 				body = ReadStreamInChunks(newResponseBody);
 			}
 
-			return $"Http Response Information: {Environment.NewLine}" +
-					$"Schema:{request.Scheme} {Environment.NewLine}" +
-					$"Host: {request.Host} {Environment.NewLine}" +
-					$"Path: {request.Path} {Environment.NewLine}" +
-					$"QueryString: {request.QueryString} {Environment.NewLine}" +
-					$"StatusCode: {response.StatusCode} {Environment.NewLine}" +
-					$"Response Body:{body}";
+			return body;
 		}
 
 		private async Task<string> FormatRequest(HttpContext context)
 		{
 			var request = context.Request;
+			var body = request.ContentType;
+
+			if (!NoLogExtensions.Contains(request.ContentType))
+			{
+				body = await GetRequestBodyAsync(request);
+			}
 
 			return $"Http Request Information: {Environment.NewLine}" +
 						$"Schema:{request.Scheme} {Environment.NewLine}" +
@@ -111,7 +111,7 @@
 						$"Path: {request.Path} {Environment.NewLine}" +
 						$"Method: {request.Method} {Environment.NewLine}" +
 						$"QueryString: {request.QueryString} {Environment.NewLine}" +
-						$"Request Body: {await GetRequestBodyAsync(request)}";
+						$"Request Body: {body}";
 		}
 
 		private async Task<string> GetRequestBodyAsync(HttpRequest request)
