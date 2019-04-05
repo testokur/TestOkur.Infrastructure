@@ -17,7 +17,8 @@
 			new[]
 			{
 			"image/png",
-			"image/jpeg"
+			"image/jpeg",
+			"application/octet-stream"
 			};
 
 		private readonly RequestDelegate _next;
@@ -110,6 +111,7 @@
 						$"Host: {request.Host} {Environment.NewLine}" +
 						$"Path: {request.Path} {Environment.NewLine}" +
 						$"Method: {request.Method} {Environment.NewLine}" +
+						$"ContentType: {request.ContentType} {Environment.NewLine}" +
 						$"QueryString: {request.QueryString} {Environment.NewLine}" +
 						$"Request Body: {body}";
 		}
