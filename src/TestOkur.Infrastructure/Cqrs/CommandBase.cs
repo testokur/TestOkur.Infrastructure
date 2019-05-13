@@ -21,5 +21,7 @@
 		public Guid Id { get; set; }
 
 		public int UserId { get; internal set; }
+
+		public string SubjectId { get; internal set; }
 	}
 }
