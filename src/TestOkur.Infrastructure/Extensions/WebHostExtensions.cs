@@ -18,33 +18,27 @@
 			bool throwOnException = true)
 			where TContext : DbContext
 		{
-			await SemaphoreSlim.WaitAsync();
-
-			try
+			await LockAsync(async () =>
 			{
 				using (var scope = webHost.Services.CreateScope())
 				{
-					var services = scope.ServiceProvider;
-					var logger = services.GetRequiredService<ILogger<TContext>>();
-					var context = services.GetService<TContext>();
-
-					if (context == null)
-					{
-						return webHost;
-					}
+					var logger = scope.ServiceProvider.GetRequiredService<ILogger<TContext>>();
+					var context = scope.ServiceProvider.GetService<TContext>();
 
 					try
 					{
-						logger.LogInformation($"Migrating database associated with context {typeof(TContext).Name}");
-						context.Database.Migrate();
-						await seeder(context, services);
-						logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
+						if (context != null)
+						{
+							logger.LogInformation(
+								$"Migrating database associated with context {typeof(TContext).Name}");
+							context.Database.Migrate();
+							await seeder(context, scope.ServiceProvider);
+							logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
+						}
 					}
 					catch (Exception ex)
 					{
-						logger.LogError(
-							ex,
-							$"An error occurred while migrating the database used on context {typeof(TContext).Name}");
+						LogException(logger, ex);
 
 						if (throwOnException)
 						{
@@ -52,13 +46,31 @@
 						}
 					}
 				}
+			});
+
+			return webHost;
+		}
+
+		private static async Task LockAsync(Func<Task> task)
+		{
+			await SemaphoreSlim.WaitAsync();
+
+			try
+			{
+				await task();
 			}
 			finally
 			{
 				SemaphoreSlim.Release(1);
 			}
+		}
 
-			return webHost;
+		private static void LogException<TContext>(ILogger<TContext> logger, Exception ex)
+			where TContext : DbContext
+		{
+			logger.LogError(
+				ex,
+				$"An error occurred while migrating the database used on context {typeof(TContext).Name}");
 		}
 	}
 }

@@ -52,21 +52,28 @@
 			stream.Seek(0, SeekOrigin.Begin);
 			string result;
 			using (var textWriter = new StringWriter())
-			using (var reader = new StreamReader(stream))
 			{
-				var readChunk = new char[ReadChunkBufferLength];
-				int readChunkLength;
-
-				do
+				using (var reader = new StreamReader(stream))
 				{
-					readChunkLength = reader.ReadBlock(readChunk, 0, ReadChunkBufferLength);
-					textWriter.Write(readChunk, 0, readChunkLength);
+					result = Read(reader, textWriter);
 				}
-				while (readChunkLength > 0);
-
-				result = textWriter.ToString();
 			}
 
+			return result;
+		}
+
+		private static string Read(StreamReader reader, StringWriter textWriter)
+		{
+			var readChunk = new char[ReadChunkBufferLength];
+			int readChunkLength;
+			do
+			{
+				readChunkLength = reader.ReadBlock(readChunk, 0, ReadChunkBufferLength);
+				textWriter.Write(readChunk, 0, readChunkLength);
+			}
+            while (readChunkLength > 0);
+
+			var result = textWriter.ToString();
 			return result;
 		}
 

@@ -26,11 +26,11 @@
 				return await base.HandleAsync(command, cancellationToken);
 			}
 
-			await StoreToCacheAsybc(cancellationToken, key);
+			await StoreToCacheAsync(cancellationToken, key);
 			return await base.HandleAsync(command, cancellationToken);
 		}
 
-		private async Task StoreToCacheAsybc(CancellationToken cancellationToken, string key)
+		private async Task StoreToCacheAsync(CancellationToken cancellationToken, string key)
 		{
 			await _distributedCache.SetStringAsync(
 				key,

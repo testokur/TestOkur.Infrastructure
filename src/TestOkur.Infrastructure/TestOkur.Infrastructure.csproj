@@ -24,7 +24,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.4" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="1.2.2" />
-    <PackageReference Include="Paramore.Brighter" Version="8.0.71" />
+    <PackageReference Include="Paramore.Brighter" Version="8.0.305" />
     <PackageReference Include="Paramore.Brighter.Extensions.DependencyInjection" Version="2.0.4" />
     <PackageReference Include="Paramore.Darker" Version="2.0.11" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
