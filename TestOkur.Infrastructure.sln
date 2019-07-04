@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{01C88A5C-EAE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Infrastructure", "src\TestOkur.Infrastructure\TestOkur.Infrastructure.csproj", "{B08153AD-88D7-4588-ADF3-88241119EC6E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{20355F61-536F-47E9-ADF5-E94D06607124}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestOkur.Infrastructure.Tests", "tests\TestOkur.Infrastructure.Tests\TestOkur.Infrastructure.Tests.csproj", "{BEFBC69B-B99E-4916-8AF9-3CF0F2671821}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +21,17 @@ Global
 		{B08153AD-88D7-4588-ADF3-88241119EC6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B08153AD-88D7-4588-ADF3-88241119EC6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B08153AD-88D7-4588-ADF3-88241119EC6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEFBC69B-B99E-4916-8AF9-3CF0F2671821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEFBC69B-B99E-4916-8AF9-3CF0F2671821}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEFBC69B-B99E-4916-8AF9-3CF0F2671821}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEFBC69B-B99E-4916-8AF9-3CF0F2671821}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B08153AD-88D7-4588-ADF3-88241119EC6E} = {01C88A5C-EAE6-4378-9E39-DB17E56C05CB}
+		{BEFBC69B-B99E-4916-8AF9-3CF0F2671821} = {20355F61-536F-47E9-ADF5-E94D06607124}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC2A1C0A-07F0-471F-9A60-6E2A21A54AF9}

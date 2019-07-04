@@ -1,4 +1,8 @@
-﻿namespace TestOkur.Infrastructure.Extensions
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("TestOkur.Infrastructure.Tests")]
+
+namespace TestOkur.Infrastructure.Extensions
 {
 	using System.Text.RegularExpressions;
 

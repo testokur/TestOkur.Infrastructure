@@ -25,30 +25,36 @@
 					var logger = scope.ServiceProvider.GetRequiredService<ILogger<TContext>>();
 					var context = scope.ServiceProvider.GetService<TContext>();
 
-					try
+					if (context != null)
 					{
-						if (context != null)
-						{
-							logger.LogInformation(
-								$"Migrating database associated with context {typeof(TContext).Name}");
-							context.Database.Migrate();
-							await seeder(context, scope.ServiceProvider);
-							logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
-						}
-					}
-					catch (Exception ex)
-					{
-						LogException(logger, ex);
-
-						if (throwOnException)
-						{
-							throw;
-						}
+						await MigrateAsync(seeder, throwOnException, context, logger, scope);
 					}
 				}
 			});
-
 			return webHost;
+		}
+
+		private static async Task MigrateAsync<TContext>(
+			Func<TContext, IServiceProvider, Task> seeder,
+			bool throwOnException,
+			TContext context,
+			ILogger<TContext> logger,
+			IServiceScope scope)
+			where TContext : DbContext
+		{
+			try
+			{
+				context.Database.Migrate();
+				await seeder(context, scope.ServiceProvider);
+			}
+			catch (Exception ex)
+			{
+				LogException(logger, ex);
+				if (throwOnException)
+				{
+					throw;
+				}
+			}
 		}
 
 		private static async Task LockAsync(Func<Task> task)

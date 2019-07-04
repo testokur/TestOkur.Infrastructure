@@ -11,22 +11,22 @@
     {
 	    public const string Subject = "sub";
 
-		private readonly IUserIdProvider _userIdProvider;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+	    private readonly IUserIdProvider _userIdProvider;
+	    private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public PopulateDecorator(IUserIdProvider userIdProvider, IHttpContextAccessor httpContextAccessor)
+	    public PopulateDecorator(IUserIdProvider userIdProvider, IHttpContextAccessor httpContextAccessor)
 		{
 			_userIdProvider = userIdProvider ?? throw new ArgumentNullException(nameof(userIdProvider));
 			_httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
 		}
 
-		public override async Task<TRequest> HandleAsync(TRequest command, CancellationToken cancellationToken = default)
+	    public override async Task<TRequest> HandleAsync(TRequest command, CancellationToken cancellationToken = default)
         {
             if (command is CommandBase commandBase)
             {
 	            var subjectId = _httpContextAccessor.HttpContext?.User?
 		            .FindFirst(Subject)?.Value;
-				commandBase.UserId = await _userIdProvider.GetAsync();
+	            commandBase.UserId = await _userIdProvider.GetAsync();
             }
 
             return await base.HandleAsync(command, cancellationToken);

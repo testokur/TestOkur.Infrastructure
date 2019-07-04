@@ -7,7 +7,7 @@
 	using Paramore.Brighter;
 	using TestOkur.Infrastructure.Extensions;
 
-    public class ClearCacheDecorator<TRequest> : RequestHandlerAsync<TRequest>
+	public class ClearCacheDecorator<TRequest> : RequestHandlerAsync<TRequest>
         where TRequest : class, IRequest
     {
         private readonly ICacheManager<object> _cacheManager;

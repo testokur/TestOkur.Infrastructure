@@ -2,7 +2,7 @@
 {
 	using System.Collections.Generic;
 
-    public interface IClearCache
+	public interface IClearCache
     {
 	    IEnumerable<string> CacheKeys { get; }
     }
