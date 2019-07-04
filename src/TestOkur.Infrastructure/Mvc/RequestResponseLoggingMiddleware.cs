@@ -18,7 +18,7 @@
 			{
 			"image/png",
 			"image/jpeg",
-			"application/octet-stream"
+			"application/octet-stream",
 			};
 
 		private readonly RequestDelegate _next;
@@ -34,27 +34,16 @@
 
 		public async Task Invoke(HttpContext context)
 		{
-			var log = new RequestResponseLog
-			{
-				RequestDateTimeUtc = new DateTimeOffset(DateTime.UtcNow),
-				Request = await FormatRequest(context)
-			};
-
 			var originalBody = context.Response.Body;
 
 			using (var newResponseBody = _recyclableMemoryStreamManager.GetStream())
 			{
 				context.Response.Body = newResponseBody;
-
 				await _next(context);
-
 				newResponseBody.Seek(0, SeekOrigin.Begin);
 				await newResponseBody.CopyToAsync(originalBody);
 				newResponseBody.Seek(0, SeekOrigin.Begin);
-				log.Response = FormatResponse(context, newResponseBody);
-				log.ResponseDateTimeUtc = new DateTimeOffset(DateTime.UtcNow);
-
-				await _requestResponseLogger.PersistAsync(log);
+				await PersistLogAsync(context, newResponseBody);
 			}
 		}
 
@@ -81,9 +70,19 @@
 			return result;
 		}
 
+		private async Task PersistLogAsync(HttpContext context, MemoryStream newResponseBody)
+		{
+			await _requestResponseLogger.PersistAsync(new RequestResponseLog
+			{
+				RequestDateTimeUtc = new DateTimeOffset(DateTime.UtcNow),
+				Request = await FormatRequest(context),
+				Response = FormatResponse(context, newResponseBody),
+				ResponseDateTimeUtc = new DateTimeOffset(DateTime.UtcNow),
+			});
+		}
+
 		private string FormatResponse(HttpContext context, MemoryStream newResponseBody)
 		{
-			var request = context.Request;
 			var response = context.Response;
 
 			var body = response.ContentType;
@@ -99,12 +98,6 @@
 		private async Task<string> FormatRequest(HttpContext context)
 		{
 			var request = context.Request;
-			var body = request.ContentType;
-
-			if (!NoLogExtensions.Contains(request.ContentType))
-			{
-				body = await GetRequestBodyAsync(request);
-			}
 
 			return $"Http Request Information: {Environment.NewLine}" +
 						$"Schema:{request.Scheme} {Environment.NewLine}" +
@@ -113,7 +106,19 @@
 						$"Method: {request.Method} {Environment.NewLine}" +
 						$"ContentType: {request.ContentType} {Environment.NewLine}" +
 						$"QueryString: {request.QueryString} {Environment.NewLine}" +
-						$"Request Body: {body}";
+						$"Request Body: {await ReadBodyAsync(request)}";
+		}
+
+		private async Task<string> ReadBodyAsync(HttpRequest request)
+		{
+			var body = request.ContentType;
+
+			if (!NoLogExtensions.Contains(request.ContentType))
+			{
+				body = await GetRequestBodyAsync(request);
+			}
+
+			return body;
 		}
 
 		private async Task<string> GetRequestBodyAsync(HttpRequest request)

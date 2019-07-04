@@ -26,17 +26,20 @@
 				return await base.HandleAsync(command, cancellationToken);
 			}
 
-			var options = new DistributedCacheEntryOptions()
-			{
-				AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
-			};
+			await StoreToCacheAsybc(cancellationToken, key);
+			return await base.HandleAsync(command, cancellationToken);
+		}
+
+		private async Task StoreToCacheAsybc(CancellationToken cancellationToken, string key)
+		{
 			await _distributedCache.SetStringAsync(
 				key,
 				key,
-				options,
+				new DistributedCacheEntryOptions()
+				{
+					AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10),
+				},
 				cancellationToken);
-
-			return await base.HandleAsync(command, cancellationToken);
 		}
 	}
 }
