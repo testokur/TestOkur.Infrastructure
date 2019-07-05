@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class CrossProcessLockFactory
+    public static class CrossProcessLockFactory
     {
         private const int DefaultTimoutInMinutes = 1;
 

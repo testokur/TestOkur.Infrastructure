@@ -24,8 +24,6 @@
         {
             if (command is CommandBase commandBase)
             {
-	            var subjectId = _httpContextAccessor.HttpContext?.User?
-		            .FindFirst(Subject)?.Value;
 	            commandBase.UserId = await _userIdProvider.GetAsync();
             }
 

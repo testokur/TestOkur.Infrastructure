@@ -6,14 +6,14 @@
 
     public class ValidateInputFilter : IActionFilter
     {
-        public void OnActionExecuting(ActionExecutingContext filterContext)
+        public void OnActionExecuting(ActionExecutingContext context)
         {
-            if (filterContext.ModelState.IsValid)
+            if (context.ModelState.IsValid)
             {
                 return;
             }
 
-            var errors = from kvp in filterContext.ModelState
+            var errors = from kvp in context.ModelState
                          from e in kvp.Value.Errors
                          select e.ErrorMessage;
 
@@ -23,7 +23,7 @@
             }
         }
 
-        public void OnActionExecuted(ActionExecutedContext filterContext)
+        public void OnActionExecuted(ActionExecutedContext context)
         {
         }
     }
