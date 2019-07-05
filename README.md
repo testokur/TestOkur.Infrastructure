@@ -3,7 +3,7 @@
 [![BCH compliance](https://bettercodehub.com/edge/badge/NazmiAltun/TestOkur.Infrastructure?branch=master)](https://bettercodehub.com/)
 [![](https://sonarcloud.io/api/project_badges/measure?project=NazmiAltun_TestOkur.Infrastructure&metric=alert_status)](https://sonarcloud.io/project/issues?id=NazmiAltun_TestOkur.Infrastructure&resolved=false&types=alert_status) 
 [![](https://sonarcloud.io/api/project_badges/measure?project=NazmiAltun_TestOkur.Infrastructure&metric=code_smells)](https://sonarcloud.io/project/issues?id=NazmiAltun_TestOkur.Infrastructure&resolved=false&types=CODE_SMELL) 
-
+[![CodeFactor](https://www.codefactor.io/repository/github/nazmialtun/testokur.infrastructure/badge)](https://www.codefactor.io/repository/github/nazmialtun/testokur.infrastructure)
 # TestOkur.Infrastructure
 
 Shared infrastructure code
