@@ -3,21 +3,16 @@
 	using System;
 	using System.Threading;
 	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Http;
 	using Paramore.Brighter;
 
 	public class PopulateDecorator<TRequest> : RequestHandlerAsync<TRequest>
         where TRequest : class, IRequest
     {
-	    public const string Subject = "sub";
-
 	    private readonly IUserIdProvider _userIdProvider;
-	    private readonly IHttpContextAccessor _httpContextAccessor;
 
-	    public PopulateDecorator(IUserIdProvider userIdProvider, IHttpContextAccessor httpContextAccessor)
+	    public PopulateDecorator(IUserIdProvider userIdProvider)
 		{
 			_userIdProvider = userIdProvider ?? throw new ArgumentNullException(nameof(userIdProvider));
-			_httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
 		}
 
 	    public override async Task<TRequest> HandleAsync(TRequest command, CancellationToken cancellationToken = default)

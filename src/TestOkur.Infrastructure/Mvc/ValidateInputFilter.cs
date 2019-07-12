@@ -25,6 +25,7 @@
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-        }
+	        // Do nothing for now
+		}
     }
 }
