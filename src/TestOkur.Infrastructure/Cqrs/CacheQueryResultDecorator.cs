@@ -20,9 +20,22 @@
 
         public TResult Execute(TQuery query, Func<TQuery, TResult> next, Func<TQuery, TResult> fallback)
         {
-            var result = next(query);
+	        var cacheQuery = query as ICacheResult;
 
-            return result;
+	        if (cacheQuery != null)
+	        {
+		        var cachedResult = (TResult)_cacheManager.Get(cacheQuery.CacheKey);
+
+		        if (cachedResult != null)
+		        {
+			        return cachedResult;
+		        }
+	        }
+
+	        var result = next(query);
+	        AddToCache(cacheQuery, result);
+
+	        return result;
         }
 
         public async Task<TResult> ExecuteAsync(
