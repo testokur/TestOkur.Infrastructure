@@ -5,7 +5,7 @@
 
     public interface IProcessor
     {
-        Task ExecuteAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default)
+        Task SendAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default)
             where TCommand : CommandBase;
 
         Task<TResult> ExecuteAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default)

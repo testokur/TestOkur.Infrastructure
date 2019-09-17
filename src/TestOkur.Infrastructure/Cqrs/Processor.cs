@@ -18,7 +18,7 @@
             _queryProcessor = queryProcessor;
         }
 
-        public async Task ExecuteAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default) where TCommand : CommandBase
+        public async Task SendAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default) where TCommand : CommandBase
         {
             command.UserId = await _userIdProvider.GetAsync();
             await _commandProcessor.SendAsync(command, cancellationToken: cancellationToken);
