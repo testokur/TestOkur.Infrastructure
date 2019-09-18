@@ -26,7 +26,10 @@
 
         public async Task<TResult> ExecuteAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default) where TQuery : QueryBase<TResult>
         {
-            query.UserId = await _userIdProvider.GetAsync();
+            if (query.UserId == default)
+            {
+                query.UserId = await _userIdProvider.GetAsync();
+            }
 
             return await _queryProcessor.ExecuteAsync(query, cancellationToken);
         }
