@@ -21,14 +21,16 @@
             _commandQueryLogger = commandQueryLogger;
         }
 
-        public async Task SendAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default) where TCommand : CommandBase
+        public async Task SendAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default)
+            where TCommand : CommandBase
         {
             await _commandQueryLogger.LogAsync(JsonConvert.SerializeObject(command));
             command.UserId = await _userIdProvider.GetAsync();
             await _commandProcessor.SendAsync(command, cancellationToken: cancellationToken);
         }
 
-        public async Task<TResult> ExecuteAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default) where TQuery : QueryBase<TResult>
+        public async Task<TResult> ExecuteAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default)
+            where TQuery : QueryBase<TResult>
         {
             await _commandQueryLogger.LogAsync(JsonConvert.SerializeObject(query));
 

@@ -4,6 +4,6 @@
 
     public interface ICommandQueryLogger
     {
-        Task LogAsync<TItem>(TItem item);
+        Task LogAsync(string serializedMessage);
     }
 }
