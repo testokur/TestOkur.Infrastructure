@@ -1,6 +1,5 @@
 ﻿namespace TestOkur.Infrastructure.Cqrs
 {
-    using Newtonsoft.Json;
     using Paramore.Brighter;
     using Paramore.Darker;
     using System.Threading;
@@ -24,7 +23,7 @@
         public async Task SendAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default)
             where TCommand : CommandBase
         {
-            await _commandQueryLogger.LogAsync(JsonConvert.SerializeObject(command));
+            await _commandQueryLogger.LogAsync(command);
             command.UserId = await _userIdProvider.GetAsync();
             await _commandProcessor.SendAsync(command, cancellationToken: cancellationToken);
         }
@@ -32,7 +31,7 @@
         public async Task<TResult> ExecuteAsync<TQuery, TResult>(TQuery query, CancellationToken cancellationToken = default)
             where TQuery : QueryBase<TResult>
         {
-            await _commandQueryLogger.LogAsync(JsonConvert.SerializeObject(query));
+            await _commandQueryLogger.LogAsync(query);
 
             if (query.UserId == default)
             {
