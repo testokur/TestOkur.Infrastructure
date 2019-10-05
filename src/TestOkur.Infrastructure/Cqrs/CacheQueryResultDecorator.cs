@@ -20,22 +20,27 @@
 
         public TResult Execute(TQuery query, Func<TQuery, TResult> next, Func<TQuery, TResult> fallback)
         {
-	        var cacheQuery = query as ICacheResult;
+            var cacheQuery = query as ICacheResult;
 
-	        if (cacheQuery != null)
-	        {
-		        var cachedResult = (TResult)_cacheManager.Get(cacheQuery.CacheKey);
+            if (cacheQuery != null)
+            {
+                var cachedResult = (TResult)_cacheManager.Get(cacheQuery.CacheKey);
 
-		        if (cachedResult != null)
-		        {
-			        return cachedResult;
-		        }
-	        }
+                if (cacheQuery is ICacheResultWithRegion cacheWithRegion)
+                {
+                    cachedResult = (TResult)_cacheManager.Get(cacheWithRegion.CacheKey, cacheWithRegion.Region);
+                }
 
-	        var result = next(query);
-	        AddToCache(cacheQuery, result);
+                if (cachedResult != null)
+                {
+                    return cachedResult;
+                }
+            }
 
-	        return result;
+            var result = next(query);
+            AddToCache(cacheQuery, result);
+
+            return result;
         }
 
         public async Task<TResult> ExecuteAsync(
@@ -64,18 +69,30 @@
 
         public void InitializeFromAttributeParams(object[] attributeParams)
         {
-			//Nothing to do here
+            //Nothing to do here
         }
 
         private void AddToCache(ICacheResult query, TResult result)
         {
             if (query != null)
             {
-                _cacheManager.Add(new CacheItem<object>(
-                    query.CacheKey,
-                    result,
-                    ExpirationMode.Absolute,
-                    query.CacheDuration));
+                if (query is ICacheResultWithRegion queryWithRegion)
+                {
+                    _cacheManager.Add(new CacheItem<object>(
+                        query.CacheKey,
+                        queryWithRegion.Region,
+                        result,
+                        ExpirationMode.Absolute,
+                        query.CacheDuration));
+                }
+                else
+                {
+                    _cacheManager.Add(new CacheItem<object>(
+                        query.CacheKey,
+                        result,
+                        ExpirationMode.Absolute,
+                        query.CacheDuration));
+                }
             }
         }
     }

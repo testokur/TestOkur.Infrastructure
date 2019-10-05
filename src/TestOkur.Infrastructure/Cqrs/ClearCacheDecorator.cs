@@ -24,6 +24,11 @@
 				clearCacheCommand.CacheKeys.Each(c => _cacheManager.Remove(c));
             }
 
+            if (command is IClearCacheWithRegion clearCacheWithRegionCommand)
+            {
+                _cacheManager.ClearRegion(clearCacheWithRegionCommand.Region);
+            }
+
             return base.HandleAsync(command, cancellationToken);
         }
     }
