@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.Infrastructure.Cqrs
 {
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using CacheManager.Core;
-	using Paramore.Brighter;
-	using TestOkur.Infrastructure.Extensions;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using CacheManager.Core;
+    using Paramore.Brighter;
+    using TestOkur.Infrastructure.Extensions;
 
-	public class ClearCacheDecorator<TRequest> : RequestHandlerAsync<TRequest>
+    public class ClearCacheDecorator<TRequest> : RequestHandlerAsync<TRequest>
         where TRequest : class, IRequest
     {
         private readonly ICacheManager<object> _cacheManager;
@@ -21,10 +21,11 @@
         {
             if (command is IClearCache clearCacheCommand)
             {
-				clearCacheCommand.CacheKeys.Each(c => _cacheManager.Remove(c));
+                clearCacheCommand.CacheKeys.Each(c => _cacheManager.Remove(c));
             }
 
-            if (command is IClearCacheWithRegion clearCacheWithRegionCommand)
+            if (command is IClearCacheWithRegion clearCacheWithRegionCommand &&
+                !string.IsNullOrEmpty(clearCacheWithRegionCommand.Region))
             {
                 _cacheManager.ClearRegion(clearCacheWithRegionCommand.Region);
             }
