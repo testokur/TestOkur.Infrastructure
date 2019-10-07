@@ -1,19 +1,19 @@
 ﻿namespace TestOkur.Infrastructure.Extensions
 {
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Hosting;
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.Extensions.DependencyInjection;
-	using Microsoft.Extensions.Logging;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
-	public static class WebHostExtensions
+    public static class IHostExtensions
 	{
 		private static readonly SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1, 1);
 
-		public static async Task<IWebHost> MigrateDbContextAsync<TContext>(
-			this IWebHost webHost,
+		public static async Task<IHost> MigrateDbContextAsync<TContext>(
+			this IHost webHost,
 			Func<TContext, IServiceProvider, Task> seeder,
 			bool throwOnException = true)
 			where TContext : DbContext
