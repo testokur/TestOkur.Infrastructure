@@ -1,15 +1,14 @@
 ﻿namespace TestOkur.Infrastructure.Mvc
 {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Http.Internal;
-	using Microsoft.IO;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.IO;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
 
-	public class RequestResponseLoggingMiddleware
+    public class RequestResponseLoggingMiddleware
 	{
 		private const int ReadChunkBufferLength = 4096;
 
@@ -131,7 +130,6 @@
 		private async Task<string> GetRequestBodyAsync(HttpRequest request)
 		{
 			request.EnableBuffering();
-			request.EnableRewind();
 			using (var requestStream = _recyclableMemoryStreamManager.GetStream())
 			{
 				await request.Body.CopyToAsync(requestStream);
