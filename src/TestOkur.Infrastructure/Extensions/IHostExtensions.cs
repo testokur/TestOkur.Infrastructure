@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.Infrastructure.Extensions
 {
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -13,14 +14,14 @@
 		private static readonly SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1, 1);
 
 		public static async Task<IHost> MigrateDbContextAsync<TContext>(
-			this IHost webHost,
+			this IHost host,
 			Func<TContext, IServiceProvider, Task> seeder,
 			bool throwOnException = true)
 			where TContext : DbContext
 		{
 			await LockAsync(async () =>
 			{
-				using (var scope = webHost.Services.CreateScope())
+				using (var scope = host.Services.CreateScope())
 				{
 					var logger = scope.ServiceProvider.GetRequiredService<ILogger<TContext>>();
 					var context = scope.ServiceProvider.GetService<TContext>();
@@ -31,8 +32,30 @@
 					}
 				}
 			});
-			return webHost;
+			return host;
 		}
+
+		public static async Task<IWebHost> MigrateDbContextAsync<TContext>(
+            this IWebHost webHost,
+            Func<TContext, IServiceProvider, Task> seeder,
+            bool throwOnException = true)
+            where TContext : DbContext
+        {
+            await LockAsync(async () =>
+            {
+                using (var scope = webHost.Services.CreateScope())
+                {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<TContext>>();
+                    var context = scope.ServiceProvider.GetService<TContext>();
+
+                    if (context != null)
+                    {
+                        await MigrateAsync(seeder, throwOnException, context, logger, scope);
+                    }
+                }
+            });
+            return webHost;
+        }
 
 		private static async Task MigrateAsync<TContext>(
 			Func<TContext, IServiceProvider, Task> seeder,
