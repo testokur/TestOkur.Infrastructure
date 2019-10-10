@@ -1,45 +1,33 @@
 ﻿namespace TestOkur.Infrastructure.Cqrs
 {
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.Extensions.Caching.Distributed;
-	using Paramore.Brighter;
+    using Microsoft.Extensions.Caching.Memory;
+    using Paramore.Brighter;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
-	public class IdempotentDecorator<TRequest> : RequestHandlerAsync<TRequest>
-		where TRequest : class, IRequest
-	{
-		private readonly IDistributedCache _distributedCache;
+    public class IdempotentDecorator<TRequest> : RequestHandlerAsync<TRequest>
+        where TRequest : class, IRequest
+    {
+        private readonly IMemoryCache _memoryCache;
 
-		public IdempotentDecorator(IDistributedCache distributedCache)
-		{
-			_distributedCache = distributedCache;
-		}
+        public IdempotentDecorator(IMemoryCache memoryCache)
+        {
+            _memoryCache = memoryCache;
+        }
 
-		public override async Task<TRequest> HandleAsync(TRequest command, CancellationToken cancellationToken = default)
-		{
-			var key = command.Id.ToString();
-			var value = await _distributedCache.GetStringAsync(key, cancellationToken);
+        public override async Task<TRequest> HandleAsync(TRequest command, CancellationToken cancellationToken = default)
+        {
+            var key = command.Id.ToString();
 
-			if (!string.IsNullOrEmpty(value))
-			{
-				return await base.HandleAsync(command, cancellationToken);
-			}
+            if (_memoryCache.TryGetValue(key, out _))
+            {
+                return command;
+            }
 
-			await StoreToCacheAsync(cancellationToken, key);
-			return await base.HandleAsync(command, cancellationToken);
-		}
+            _memoryCache.Set(key, key, DateTimeOffset.FromUnixTimeSeconds(1000));
 
-		private async Task StoreToCacheAsync(CancellationToken cancellationToken, string key)
-		{
-			await _distributedCache.SetStringAsync(
-				key,
-				key,
-				new DistributedCacheEntryOptions()
-				{
-					AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10),
-				},
-				cancellationToken);
-		}
-	}
+            return await base.HandleAsync(command, cancellationToken);
+        }
+    }
 }
