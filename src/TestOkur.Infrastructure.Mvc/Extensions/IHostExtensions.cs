@@ -5,11 +5,10 @@
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using System;
-    using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
 
-    public static class IHostExtensions
+    public static class HostExtensions
     {
         private static readonly SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1, 1);
 
@@ -17,6 +16,7 @@
             this IHost host,
             Func<TContext, IServiceProvider, Task> seeder,
             bool throwOnException = true)
+            where TContext : ICanMigrate
         {
             await LockAsync(async () =>
             {
@@ -38,6 +38,7 @@
             this IWebHost webHost,
             Func<TContext, IServiceProvider, Task> seeder,
             bool throwOnException = true)
+            where TContext : ICanMigrate
         {
             await LockAsync(async () =>
             {
@@ -61,16 +62,11 @@
             TContext context,
             ILogger<TContext> logger,
             IServiceScope scope)
+            where TContext : ICanMigrate
         {
             try
             {
-                var databasePropertyInfo = typeof(TContext)
-                    .GetProperty("Database", BindingFlags.Instance | BindingFlags.Public);
-                var migrateMethodInfo = databasePropertyInfo
-                    .PropertyType
-                    .GetMethod("Migrate");
-                var database = databasePropertyInfo.GetMethod.Invoke(context, null);
-                migrateMethodInfo.Invoke(database, null);
+                await context.MigrateAsync();
                 await seeder(context, scope.ServiceProvider);
             }
             catch (Exception ex)
