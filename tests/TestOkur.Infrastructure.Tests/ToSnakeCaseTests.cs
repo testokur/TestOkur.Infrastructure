@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using TestOkur.Infrastructure.Extensions;
+using TestOkur.Infrastructure.Data;
 using Xunit;
 
 namespace TestOkur.Infrastructure.Tests

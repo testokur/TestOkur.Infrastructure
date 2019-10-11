@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\TestOkur.Infrastructure\TestOkur.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\TestOkur.Infrastructure.Data\TestOkur.Infrastructure.Data.csproj" />
   </ItemGroup>
 
 </Project>
