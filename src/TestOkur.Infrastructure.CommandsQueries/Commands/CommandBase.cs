@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Infrastructure.CommandsQueries
+﻿namespace TestOkur.Infrastructure.CommandsQueries.Commands
 {
     using System;
     using System.Runtime.Serialization;

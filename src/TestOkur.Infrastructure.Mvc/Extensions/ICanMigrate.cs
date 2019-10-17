@@ -5,6 +5,7 @@
     public interface ICanMigrate
     {
         void Migrate();
+
         Task MigrateAsync();
     }
 }

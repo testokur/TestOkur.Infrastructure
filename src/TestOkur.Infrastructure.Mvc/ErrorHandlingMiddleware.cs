@@ -1,12 +1,12 @@
-﻿namespace TestOkur.Infrastructure.Mvc.Mvc
+﻿namespace TestOkur.Infrastructure.Mvc
 {
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Logging;
-    using Newtonsoft.Json;
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Net;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Logging;
+    using Newtonsoft.Json;
 
     public class ErrorHandlingMiddleware
     {

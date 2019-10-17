@@ -1,10 +1,10 @@
-﻿namespace TestOkur.Infrastructure.CommandsQueries
+﻿namespace TestOkur.Infrastructure.CommandsQueries.Commands
 {
-    using Microsoft.Extensions.Caching.Memory;
-    using Paramore.Brighter;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Extensions.Caching.Memory;
+    using Paramore.Brighter;
 
     public class IdempotentDecorator<TRequest> : RequestHandlerAsync<TRequest>
         where TRequest : class, IRequest

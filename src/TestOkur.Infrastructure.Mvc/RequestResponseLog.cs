@@ -1,8 +1,8 @@
-﻿namespace TestOkur.Infrastructure.Mvc.Mvc
+﻿namespace TestOkur.Infrastructure.Mvc
 {
-	using System;
+    using System;
 
-	public class RequestResponseLog
+    public class RequestResponseLog
 	{
 		public string Request { get; set; }
 

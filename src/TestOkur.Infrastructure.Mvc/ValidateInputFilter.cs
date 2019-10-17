@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Infrastructure.Mvc.Mvc
+﻿namespace TestOkur.Infrastructure.Mvc
 {
     using System.ComponentModel.DataAnnotations;
     using System.Linq;

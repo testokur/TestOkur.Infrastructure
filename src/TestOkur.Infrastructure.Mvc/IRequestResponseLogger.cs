@@ -1,8 +1,8 @@
-﻿namespace TestOkur.Infrastructure.Mvc.Mvc
+﻿namespace TestOkur.Infrastructure.Mvc
 {
-	using System.Threading.Tasks;
+    using System.Threading.Tasks;
 
-	public interface IRequestResponseLogger
+    public interface IRequestResponseLogger
 	{
 		Task PersistAsync(RequestResponseLog log);
 	}
