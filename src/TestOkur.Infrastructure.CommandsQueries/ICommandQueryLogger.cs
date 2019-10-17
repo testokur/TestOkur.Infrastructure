@@ -5,5 +5,7 @@
     public interface ICommandQueryLogger
     {
         Task LogAsync(object message);
+
+        void Log(object message);
     }
 }

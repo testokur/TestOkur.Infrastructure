@@ -5,5 +5,7 @@
 	public interface IUserIdProvider
 	{
 		Task<int> GetAsync();
-	}
+
+        int Get();
+    }
 }

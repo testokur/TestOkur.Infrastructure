@@ -19,27 +19,42 @@
 
         public TResult Execute<TResult>(IQuery<TResult> query)
         {
-            throw new System.NotImplementedException();
+            if (!(query is QueryBase<TResult> queryBase))
+            {
+                return _decoratee.Execute(query);
+            }
+
+            if (!(queryBase is ISkipLogging))
+            {
+                _commandQueryLogger.Log(query);
+            }
+
+            if (queryBase.UserId == default)
+            {
+                queryBase.UserId = _userIdProvider.Get();
+            }
+
+            return _decoratee.Execute(queryBase);
         }
 
-        public async Task<TResult> ExecuteAsync<TResult>(IQuery<TResult> q, CancellationToken cancellationToken = default)
+        public async Task<TResult> ExecuteAsync<TResult>(IQuery<TResult> query, CancellationToken cancellationToken = default)
         {
-            if (!(q is QueryBase<TResult> query))
+            if (!(query is QueryBase<TResult> queryBase))
             {
-                return await _decoratee.ExecuteAsync(q, cancellationToken);
+                return await _decoratee.ExecuteAsync(query, cancellationToken);
             }
 
-            if (!(query is ISkipLogging))
+            if (!(queryBase is ISkipLogging))
             {
-                await _commandQueryLogger.LogAsync(q);
+                await _commandQueryLogger.LogAsync(query);
             }
 
-            if (query.UserId == default)
+            if (queryBase.UserId == default)
             {
-                query.UserId = await _userIdProvider.GetAsync();
+                queryBase.UserId = await _userIdProvider.GetAsync();
             }
 
-            return await _decoratee.ExecuteAsync(query, cancellationToken);
+            return await _decoratee.ExecuteAsync(queryBase, cancellationToken);
         }
     }
 }

@@ -66,26 +66,36 @@
 
         void IAmACommandProcessor.Send<T>(T command)
         {
-            throw new NotImplementedException();
-        }
-
-        async Task IAmACommandProcessor.SendAsync<T>(T c, bool continueOnCapturedContext, CancellationToken cancellationToken)
-        {
-            var command = c as CommandBase;
-
-            if (command == null)
+            if (!(command is CommandBase commandBase))
             {
-                await _commandProcessor.SendAsync(c, cancellationToken: cancellationToken);
+                _commandProcessor.Send(command);
                 return;
             }
 
-            if (!(command is ISkipLogging))
+            if (!(commandBase is ISkipLogging))
             {
-                await _commandQueryLogger.LogAsync(c);
+                _commandQueryLogger.LogAsync(command);
             }
 
-            command.UserId = await _userIdProvider.GetAsync();
-            await _commandProcessor.SendAsync(command, cancellationToken: cancellationToken);
+            commandBase.UserId = _userIdProvider.Get();
+            _commandProcessor.Send(commandBase);
+        }
+
+        async Task IAmACommandProcessor.SendAsync<T>(T command, bool continueOnCapturedContext, CancellationToken cancellationToken)
+        {
+            if (!(command is CommandBase commandBase))
+            {
+                await _commandProcessor.SendAsync(command, cancellationToken: cancellationToken);
+                return;
+            }
+
+            if (!(commandBase is ISkipLogging))
+            {
+                await _commandQueryLogger.LogAsync(command);
+            }
+
+            commandBase.UserId = await _userIdProvider.GetAsync();
+            await _commandProcessor.SendAsync(commandBase, cancellationToken: cancellationToken);
         }
     }
 }
