@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Infrastructure.CommandsQueries.Commands
+﻿namespace TestOkur.Infrastructure.CommandsQueries
 {
     public interface IClearCacheWithRegion : IClearCache
     {

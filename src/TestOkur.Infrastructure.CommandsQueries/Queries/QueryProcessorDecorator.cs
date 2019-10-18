@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Infrastructure.CommandsQueries.Queries
+﻿namespace TestOkur.Infrastructure.CommandsQueries
 {
     using System.Threading;
     using System.Threading.Tasks;

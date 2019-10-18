@@ -1,13 +1,11 @@
 ﻿namespace TestOkur.Infrastructure.CommandsQueries.Extensions
 {
-    using System;
     using Microsoft.Extensions.DependencyInjection;
     using Paramore.Brighter;
     using Paramore.Brighter.Extensions.DependencyInjection;
     using Paramore.Darker;
     using Paramore.Darker.AspNetCore;
-    using TestOkur.Infrastructure.CommandsQueries.Commands;
-    using TestOkur.Infrastructure.CommandsQueries.Queries;
+    using System;
 
     public static class IServiceCollectionExtensions
     {
