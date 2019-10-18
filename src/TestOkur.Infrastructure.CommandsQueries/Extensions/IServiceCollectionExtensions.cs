@@ -1,10 +1,13 @@
 ﻿namespace TestOkur.Infrastructure.CommandsQueries.Extensions
 {
-    using Microsoft.Extensions.DependencyInjection;
-    using Paramore.Brighter.Extensions.DependencyInjection;
-    using Paramore.Darker.AspNetCore;
     using System;
+    using Microsoft.Extensions.DependencyInjection;
+    using Paramore.Brighter;
+    using Paramore.Brighter.Extensions.DependencyInjection;
+    using Paramore.Darker;
+    using Paramore.Darker.AspNetCore;
     using TestOkur.Infrastructure.CommandsQueries.Commands;
+    using TestOkur.Infrastructure.CommandsQueries.Queries;
 
     public static class IServiceCollectionExtensions
     {
@@ -17,6 +20,9 @@
             services.AddBrighter()
                 .AsyncHandlersFromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
                 .AddPipelineHandlers();
+
+            services.Decorate<IAmACommandProcessor, CommandProcessorDecorator>();
+            services.Decorate<IQueryProcessor, QueryProcessorDecorator>();
 
             return services;
         }
