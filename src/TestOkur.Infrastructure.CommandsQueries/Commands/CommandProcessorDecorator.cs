@@ -12,9 +12,12 @@
         private readonly IUserIdProvider _userIdProvider;
         private readonly ICommandQueryLogger _commandQueryLogger;
 
-        public CommandProcessorDecorator(IAmACommandProcessor commandProcessor, IUserIdProvider userIdProvider, ICommandQueryLogger commandQueryLogger)
+        public CommandProcessorDecorator(
+            IAmACommandProcessor commandProcessor,
+            IUserIdProvider userIdProvider,
+            ICommandQueryLogger commandQueryLogger)
         {
-            _commandProcessor = commandProcessor;
+            _commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
             _userIdProvider = userIdProvider;
             _commandQueryLogger = commandQueryLogger;
         }
@@ -42,7 +45,7 @@
             return _commandProcessor.DepositPost(request);
         }
 
-        public async Task<Guid> DepositPostAsync<T>(T request, bool continueOnCapturedContext, CancellationToken cancellationToken)
+        public async Task<Guid> DepositPostAsync<T>(T request, bool continueOnCapturedContext = false, CancellationToken cancellationToken = default)
             where T : class, IRequest
         {
             return await _commandProcessor.DepositPostAsync(request, continueOnCapturedContext, cancellationToken);
@@ -54,7 +57,7 @@
             _commandProcessor.Post(request);
         }
 
-        public async Task PostAsync<T>(T request, bool continueOnCapturedContext, CancellationToken cancellationToken)
+        public async Task PostAsync<T>(T request, bool continueOnCapturedContext = false, CancellationToken cancellationToken = default)
             where T : class, IRequest
         {
             await _commandProcessor.PostAsync(request, continueOnCapturedContext, cancellationToken);
@@ -66,7 +69,7 @@
             _commandProcessor.Publish(@event);
         }
 
-        public async Task PublishAsync<T>(T @event, bool continueOnCapturedContext, CancellationToken cancellationToken)
+        public async Task PublishAsync<T>(T @event, bool continueOnCapturedContext = false, CancellationToken cancellationToken = default)
             where T : class, IRequest
         {
             await _commandProcessor.PublishAsync(@event, continueOnCapturedContext, cancellationToken);
@@ -87,15 +90,15 @@
             }
 
             commandBase.UserId = _userIdProvider.Get();
-            _commandProcessor.Send(commandBase);
+            _commandProcessor.Send(command);
         }
 
-        public async Task SendAsync<T>(T command, bool continueOnCapturedContext, CancellationToken cancellationToken)
+        public async Task SendAsync<T>(T command, bool continueOnCapturedContext = false, CancellationToken cancellationToken = default)
             where T : class, IRequest
         {
             if (!(command is CommandBase commandBase))
             {
-                await _commandProcessor.SendAsync(command, cancellationToken: cancellationToken);
+                await _commandProcessor.SendAsync(command, continueOnCapturedContext, cancellationToken);
                 return;
             }
 
@@ -105,7 +108,7 @@
             }
 
             commandBase.UserId = await _userIdProvider.GetAsync();
-            await _commandProcessor.SendAsync(commandBase, cancellationToken: cancellationToken);
+            await _commandProcessor.SendAsync(command, continueOnCapturedContext, cancellationToken);
         }
     }
 }

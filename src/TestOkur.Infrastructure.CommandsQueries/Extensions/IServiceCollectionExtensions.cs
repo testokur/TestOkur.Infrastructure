@@ -10,7 +10,7 @@
 
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddCommandsAndQueries2(
+        public static IServiceCollection AddCommandsAndQueries(
             this IServiceCollection services,
             params Assembly[] assemblies)
         {
