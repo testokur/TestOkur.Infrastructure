@@ -20,6 +20,7 @@
     <PackageReference Include="Paramore.Brighter" Version="8.0.305" />
     <PackageReference Include="Paramore.Brighter.Extensions.DependencyInjection" Version="2.0.4" />
     <PackageReference Include="Paramore.Darker" Version="2.0.78" />
+    <PackageReference Include="Paramore.Darker.AspNetCore" Version="2.0.78" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
