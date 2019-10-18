@@ -21,50 +21,59 @@
 
         public void ClearPostBox(params Guid[] posts)
         {
-            throw new NotImplementedException();
+            _commandProcessor.ClearPostBox(posts);
         }
 
-        public Task ClearPostBoxAsync(IEnumerable<Guid> posts, bool continueOnCapturedContext = false, CancellationToken cancellationToken = default)
+        public async Task ClearPostBoxAsync(IEnumerable<Guid> posts, bool continueOnCapturedContext = false, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            await _commandProcessor.ClearPostBoxAsync(posts, continueOnCapturedContext, cancellationToken);
         }
 
-        TResponse IAmACommandProcessor.Call<T, TResponse>(T request, int timeOutInMilliseconds)
+        public TResponse Call<T, TResponse>(T request, int timeOutInMilliseconds)
+            where T : class, ICall
+            where TResponse : class, IResponse
         {
-            throw new NotImplementedException();
+            return _commandProcessor.Call<T, TResponse>(request, timeOutInMilliseconds);
         }
 
-        Guid IAmACommandProcessor.DepositPost<T>(T request)
+        public Guid DepositPost<T>(T request)
+            where T : class, IRequest
         {
-            throw new NotImplementedException();
+            return _commandProcessor.DepositPost(request);
         }
 
-        Task<Guid> IAmACommandProcessor.DepositPostAsync<T>(T request, bool continueOnCapturedContext, CancellationToken cancellationToken)
+        public async Task<Guid> DepositPostAsync<T>(T request, bool continueOnCapturedContext, CancellationToken cancellationToken)
+            where T : class, IRequest
         {
-            throw new NotImplementedException();
+            return await _commandProcessor.DepositPostAsync(request, continueOnCapturedContext, cancellationToken);
         }
 
-        void IAmACommandProcessor.Post<T>(T request)
+        public void Post<T>(T request)
+            where T : class, IRequest
         {
-            throw new NotImplementedException();
+            _commandProcessor.Post(request);
         }
 
-        Task IAmACommandProcessor.PostAsync<T>(T request, bool continueOnCapturedContext, CancellationToken cancellationToken)
+        public async Task PostAsync<T>(T request, bool continueOnCapturedContext, CancellationToken cancellationToken)
+            where T : class, IRequest
         {
-            throw new NotImplementedException();
+            await _commandProcessor.PostAsync(request, continueOnCapturedContext, cancellationToken);
         }
 
-        void IAmACommandProcessor.Publish<T>(T @event)
+        public void Publish<T>(T @event)
+            where T : class, IRequest
         {
-            throw new NotImplementedException();
+            _commandProcessor.Publish(@event);
         }
 
-        Task IAmACommandProcessor.PublishAsync<T>(T @event, bool continueOnCapturedContext, CancellationToken cancellationToken)
+        public async Task PublishAsync<T>(T @event, bool continueOnCapturedContext, CancellationToken cancellationToken)
+            where T : class, IRequest
         {
-            throw new NotImplementedException();
+            await _commandProcessor.PublishAsync(@event, continueOnCapturedContext, cancellationToken);
         }
 
-        void IAmACommandProcessor.Send<T>(T command)
+        public void Send<T>(T command)
+            where T : class, IRequest
         {
             if (!(command is CommandBase commandBase))
             {
@@ -81,7 +90,8 @@
             _commandProcessor.Send(commandBase);
         }
 
-        async Task IAmACommandProcessor.SendAsync<T>(T command, bool continueOnCapturedContext, CancellationToken cancellationToken)
+        public async Task SendAsync<T>(T command, bool continueOnCapturedContext, CancellationToken cancellationToken)
+            where T : class, IRequest
         {
             if (!(command is CommandBase commandBase))
             {

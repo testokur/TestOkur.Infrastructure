@@ -5,23 +5,21 @@
     using Paramore.Brighter.Extensions.DependencyInjection;
     using Paramore.Darker;
     using Paramore.Darker.AspNetCore;
-    using System;
-    using System.Linq;
+    using System.Reflection;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddCommandsAndQueries(this IServiceCollection services)
+        public static IServiceCollection AddCommandsAndQueries2(
+            this IServiceCollection services,
+            params Assembly[] assemblies)
         {
             services.AddDarker()
-                .AddHandlersFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()
-                    .Where(p => !p.IsDynamic)
-                    .ToArray())
+                .AddHandlersFromAssemblies(assemblies)
                 .AddCustomDecorators();
 
             services.AddBrighter()
-                .AsyncHandlersFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()
-                    .Where(p => !p.IsDynamic)
-                    .ToArray())
+                .AsyncHandlersFromAssemblies(assemblies)
                 .AddPipelineHandlers();
 
             services.Decorate<IAmACommandProcessor, CommandProcessorDecorator>();
