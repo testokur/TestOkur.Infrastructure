@@ -20,6 +20,7 @@
 
             services.AddBrighter()
                 .AsyncHandlersFromAssemblies(assemblies)
+                .HandlersFromAssemblies(assemblies)
                 .AddPipelineHandlers();
 
             services.Decorate<IAmACommandProcessor, CommandProcessorDecorator>();

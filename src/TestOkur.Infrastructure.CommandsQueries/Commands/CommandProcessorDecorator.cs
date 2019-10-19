@@ -86,7 +86,7 @@
 
             if (!(commandBase is ISkipLogging))
             {
-                _commandQueryLogger.LogAsync(command);
+                _commandQueryLogger.Log(command);
             }
 
             commandBase.UserId = _userIdProvider.Get();
