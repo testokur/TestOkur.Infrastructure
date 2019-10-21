@@ -1,19 +1,22 @@
 ﻿namespace TestOkur.Infrastructure.CommandsQueries
 {
+    using CacheManager.Core;
+    using Microsoft.Extensions.Logging;
+    using Paramore.Darker;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using CacheManager.Core;
-    using Paramore.Darker;
 
     public class CacheQueryResultDecorator<TQuery, TResult> : IQueryHandlerDecorator<TQuery, TResult>
         where TQuery : IQuery<TResult>
     {
         private readonly ICacheManager<object> _cacheManager;
+        private readonly ILogger<CacheQueryResultDecorator<TQuery, TResult>> _logger;
 
-        public CacheQueryResultDecorator(ICacheManager<object> cacheManager)
+        public CacheQueryResultDecorator(ICacheManager<object> cacheManager, ILogger<CacheQueryResultDecorator<TQuery, TResult>> logger)
         {
             _cacheManager = cacheManager;
+            _logger = logger;
         }
 
         public IQueryContext Context { get; set; }
@@ -24,16 +27,16 @@
 
             if (cacheQuery != null)
             {
-                var cachedResult = (TResult)_cacheManager.Get(cacheQuery.CacheKey);
+                var cachedResult = _cacheManager.Get(cacheQuery.CacheKey);
 
                 if (cacheQuery is ICacheResultWithRegion cacheWithRegion)
                 {
-                    cachedResult = (TResult)_cacheManager.Get(cacheWithRegion.CacheKey, cacheWithRegion.Region);
+                    cachedResult = _cacheManager.Get(cacheWithRegion.CacheKey, cacheWithRegion.Region);
                 }
 
                 if (cachedResult != null)
                 {
-                    return cachedResult;
+                    return (TResult) cachedResult;
                 }
             }
 
@@ -53,11 +56,13 @@
 
             if (cacheQuery != null)
             {
-                var cachedResult = (TResult)_cacheManager.Get(cacheQuery.CacheKey);
+                var cachedResult = _cacheManager.Get(cacheQuery.CacheKey);
 
                 if (cachedResult != null)
                 {
-                    return cachedResult;
+                    _logger.LogWarning($"Query result found in cache with key {cacheQuery.CacheKey}");
+
+                    return (TResult) cachedResult;
                 }
             }
 
@@ -72,7 +77,7 @@
             //Nothing to do here
         }
 
-        private void AddToCache(ICacheResult query, TResult result)
+        private void AddToCache(ICacheResult query, object result)
         {
             if (query != null)
             {
@@ -84,6 +89,7 @@
                         result,
                         ExpirationMode.Absolute,
                         query.CacheDuration));
+                    _logger.LogWarning($"Query result added to cache with key {query.CacheKey} with region {queryWithRegion.Region} with duration {query.CacheDuration}");
                 }
                 else
                 {
@@ -92,6 +98,7 @@
                         result,
                         ExpirationMode.Absolute,
                         query.CacheDuration));
+                    _logger.LogWarning($"Query result added to cache with key {query.CacheKey} with duration {query.CacheDuration}");
                 }
             }
         }
