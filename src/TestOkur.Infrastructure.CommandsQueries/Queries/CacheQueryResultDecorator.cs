@@ -60,7 +60,7 @@
 
                 if (cachedResult != null)
                 {
-                    _logger.LogWarning($"Query result found in cache with key {cacheQuery.CacheKey}");
+                    _logger.LogDebug($"Query result found in cache with key {cacheQuery.CacheKey}");
 
                     return (TResult) cachedResult;
                 }
@@ -89,7 +89,7 @@
                         result,
                         ExpirationMode.Absolute,
                         query.CacheDuration));
-                    _logger.LogWarning($"Query result added to cache with key {query.CacheKey} with region {queryWithRegion.Region} with duration {query.CacheDuration}");
+                    _logger.LogDebug($"Query result added to cache with key {query.CacheKey} with region {queryWithRegion.Region} with duration {query.CacheDuration}");
                 }
                 else
                 {
@@ -98,7 +98,7 @@
                         result,
                         ExpirationMode.Absolute,
                         query.CacheDuration));
-                    _logger.LogWarning($"Query result added to cache with key {query.CacheKey} with duration {query.CacheDuration}");
+                    _logger.LogDebug($"Query result added to cache with key {query.CacheKey} with duration {query.CacheDuration}");
                 }
             }
         }

@@ -26,7 +26,7 @@
                 foreach (var cacheKey in clearCacheCommand.CacheKeys)
                 {
                     _cacheManager.Remove(cacheKey);
-                    _logger.LogWarning($"Cache removed with key {cacheKey}");
+                    _logger.LogDebug($"Cache removed with key {cacheKey}");
                 }
             }
 
@@ -34,7 +34,7 @@
                 !string.IsNullOrEmpty(clearCacheWithRegionCommand.Region))
             {
                 _cacheManager.ClearRegion(clearCacheWithRegionCommand.Region);
-                _logger.LogWarning($"Cache removed with Region {clearCacheWithRegionCommand.Region}");
+                _logger.LogDebug($"Cache removed with Region {clearCacheWithRegionCommand.Region}");
             }
 
             return base.HandleAsync(command, cancellationToken);
