@@ -52,11 +52,17 @@
             Func<TQuery, CancellationToken, Task<TResult>> fallback,
             CancellationToken cancellationToken = default)
         {
+            //TODO:Need to refactor this
             var cacheQuery = query as ICacheResult;
 
             if (cacheQuery != null)
             {
                 var cachedResult = _cacheManager.Get(cacheQuery.CacheKey);
+
+                if (cacheQuery is ICacheResultWithRegion cacheWithRegion)
+                {
+                    cachedResult = _cacheManager.Get(cacheWithRegion.CacheKey, cacheWithRegion.Region);
+                }
 
                 if (cachedResult != null)
                 {
