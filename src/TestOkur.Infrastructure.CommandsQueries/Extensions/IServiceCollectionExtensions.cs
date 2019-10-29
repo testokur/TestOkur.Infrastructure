@@ -10,7 +10,7 @@
 
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddCommandsAndQueries(
+        public static IServiceCollection AddQueries(
             this IServiceCollection services,
             params Assembly[] assemblies)
         {
@@ -18,14 +18,31 @@
                 .AddHandlersFromAssemblies(assemblies)
                 .AddCustomDecorators();
 
+            services.Decorate<IQueryProcessor, QueryProcessorDecorator>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddCommands(
+            this IServiceCollection services,
+            params Assembly[] assemblies)
+        {
             services.AddBrighter()
                 .AsyncHandlersFromAssemblies(assemblies)
                 .HandlersFromAssemblies(assemblies)
                 .AddPipelineHandlers();
 
             services.Decorate<IAmACommandProcessor, CommandProcessorDecorator>();
-            services.Decorate<IQueryProcessor, QueryProcessorDecorator>();
 
+            return services;
+        }
+
+        public static IServiceCollection AddCommandsAndQueries(
+            this IServiceCollection services,
+            params Assembly[] assemblies)
+        {
+            services.AddQueries(assemblies)
+                .AddCommands(assemblies);
             return services;
         }
     }
