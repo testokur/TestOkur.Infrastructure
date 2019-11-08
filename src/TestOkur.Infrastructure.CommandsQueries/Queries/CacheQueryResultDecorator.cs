@@ -59,11 +59,6 @@
             {
                 var cachedResult = _cacheManager.Get(cacheQuery.CacheKey);
 
-                if (cacheQuery is ICacheResultWithRegion cacheWithRegion)
-                {
-                    cachedResult = _cacheManager.Get(cacheWithRegion.CacheKey, cacheWithRegion.Region);
-                }
-
                 if (cachedResult != null)
                 {
                     _logger.LogDebug($"Query result found in cache with key {cacheQuery.CacheKey}");
