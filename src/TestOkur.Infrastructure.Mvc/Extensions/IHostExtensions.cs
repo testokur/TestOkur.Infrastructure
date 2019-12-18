@@ -8,7 +8,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public static class HostExtensions
+    public static class IHostExtensions
     {
         private static readonly SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1, 1);
 

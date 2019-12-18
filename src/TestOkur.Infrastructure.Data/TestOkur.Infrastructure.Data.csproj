@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <CodeAnalysisRuleSet>..\..\StyleCopRules.ruleset</CodeAnalysisRuleSet>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <Version>1.0.2</Version>
     <Copyright>Nazmi Altun</Copyright>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/NazmiAltun/TestOkur.Infrastructure</RepositoryUrl>
-    <FileVersion>1.0.1.0</FileVersion>
+    <FileVersion>1.0.2.0</FileVersion>
     <LangVersion>latest</LangVersion>
     <ProjectGuid>{B08153AD-88D7-4588-ADF3-88231117EC6E}</ProjectGuid>
   </PropertyGroup>
