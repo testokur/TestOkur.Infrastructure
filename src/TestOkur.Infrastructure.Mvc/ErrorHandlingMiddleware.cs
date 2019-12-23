@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Net;
+    using System.Net.Mime;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
@@ -42,7 +43,7 @@
             }
 
             var result = JsonConvert.SerializeObject(new { error = exception.Message });
-            context.Response.ContentType = "application/json";
+            context.Response.ContentType = MediaTypeNames.Application.Json;
             context.Response.StatusCode = (int)code;
             _logger.LogError(exception.ToString());
             return context.Response.WriteAsync(result);
