@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\TestOkur.Infrastructure.Data\TestOkur.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\..\src\TestOkur.Infrastructure.Mvc\TestOkur.Infrastructure.Mvc.csproj" />
   </ItemGroup>
 
 </Project>
