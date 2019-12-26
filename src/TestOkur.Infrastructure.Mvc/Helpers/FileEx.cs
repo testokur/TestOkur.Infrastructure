@@ -8,9 +8,10 @@
     {
         public static async Task<string> ReadAllTextAsync(string path)
         {
-            var lines = await File.ReadAllLinesAsync(path, Encoding.UTF8);
-
-            return string.Concat(lines);
+            using (var reader = File.OpenText(path))
+            {
+                return await reader.ReadToEndAsync();
+            }
         }
     }
 }
