@@ -12,10 +12,10 @@
         void LogQuery<TQuery>(TQuery query)
             where TQuery : IQuery;
 
-        Task LogCommandAsync<TCommand>(TCommand query)
+        Task LogCommandAsync<TCommand>(TCommand command)
             where TCommand : IRequest;
 
-        void LogCommand<TCommand>(TCommand query)
+        void LogCommand<TCommand>(TCommand command)
             where TCommand : IRequest;
     }
 }
