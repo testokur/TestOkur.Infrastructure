@@ -1,11 +1,21 @@
 ﻿namespace TestOkur.Infrastructure.CommandsQueries
 {
     using System.Threading.Tasks;
+    using Paramore.Brighter;
+    using Paramore.Darker;
 
     public interface ICommandQueryLogger
     {
-        Task LogAsync(object message);
+        Task LogQueryAsync<TQuery>(TQuery query)
+            where TQuery : IQuery;
 
-        void Log(object message);
+        void LogQuery<TQuery>(TQuery query)
+            where TQuery : IQuery;
+
+        Task LogCommandAsync<TCommand>(TCommand query)
+            where TCommand : IRequest;
+
+        void LogCommand<TCommand>(TCommand query)
+            where TCommand : IRequest;
     }
 }

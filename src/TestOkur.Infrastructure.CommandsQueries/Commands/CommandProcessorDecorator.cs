@@ -86,7 +86,7 @@
 
             if (!(commandBase is ISkipLogging))
             {
-                _commandQueryLogger.Log(command);
+                _commandQueryLogger.LogCommand(command);
             }
 
             commandBase.UserId = _userIdProvider.Get();
@@ -104,7 +104,7 @@
 
             if (!(commandBase is ISkipLogging))
             {
-                await _commandQueryLogger.LogAsync(command);
+                await _commandQueryLogger.LogCommandAsync(command);
             }
 
             commandBase.UserId = await _userIdProvider.GetAsync();

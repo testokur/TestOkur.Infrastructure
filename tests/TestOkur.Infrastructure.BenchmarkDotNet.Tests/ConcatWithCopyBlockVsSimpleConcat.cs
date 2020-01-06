@@ -1,8 +1,8 @@
-﻿using System;
+﻿using BenchmarkDotNet.Attributes;
+using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using BenchmarkDotNet.Attributes;
 
 namespace TestOkur.Infrastructure.BenchmarkDotNet.Tests
 {

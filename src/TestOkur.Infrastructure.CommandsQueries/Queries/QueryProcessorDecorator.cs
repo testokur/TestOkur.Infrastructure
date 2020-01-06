@@ -26,7 +26,7 @@
 
             if (!(queryBase is ISkipLogging))
             {
-                _commandQueryLogger.Log(query);
+                _commandQueryLogger.LogQuery(query);
             }
 
             if (queryBase.UserId == default)
@@ -46,7 +46,7 @@
 
             if (!(queryBase is ISkipLogging))
             {
-                await _commandQueryLogger.LogAsync(query);
+                await _commandQueryLogger.LogQueryAsync(query);
             }
 
             if (queryBase.UserId == default)
