@@ -1,10 +1,8 @@
 ﻿namespace TestOkur.Infrastructure.CommandsQueries
 {
-    using System;
-    using System.Runtime.Serialization;
     using Paramore.Brighter;
+    using System;
 
-    [DataContract]
     public abstract class CommandBase : ICommand
     {
         protected CommandBase(Guid id)
@@ -17,7 +15,6 @@
             Id = Guid.NewGuid();
         }
 
-        [DataMember]
         public Guid Id { get; set; }
 
         public int UserId { get; internal set; }
