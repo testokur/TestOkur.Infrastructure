@@ -2,12 +2,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <CodeAnalysisRuleSet>..\..\StyleCopRules.ruleset</CodeAnalysisRuleSet>
-    <AssemblyVersion>1.0.7.0</AssemblyVersion>
-    <Version>1.0.7</Version>
+    <AssemblyVersion>1.0.8.0</AssemblyVersion>
+    <Version>1.0.8</Version>
     <Copyright>Nazmi Altun</Copyright>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/NazmiAltun/TestOkur.Infrastructure</RepositoryUrl>
-    <FileVersion>1.0.7.0</FileVersion>
+    <FileVersion>1.0.8.0</FileVersion>
     <LangVersion>latest</LangVersion>
     <ProjectGuid>{B08153AD-99D7-4588-ADF3-88241119EC6E}</ProjectGuid>
   </PropertyGroup>
