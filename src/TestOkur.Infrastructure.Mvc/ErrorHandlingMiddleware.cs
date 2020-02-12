@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
-    using Newtonsoft.Json;
+    using TestOkur.Serialization;
 
     public class ErrorHandlingMiddleware
     {
@@ -41,11 +41,15 @@
             {
                 code = HttpStatusCode.BadRequest;
             }
+            else
+            {
+                _logger.LogError(exception.ToString());
+            }
 
-            var result = JsonConvert.SerializeObject(new { error = exception.Message });
+            var result = JsonUtils.Serialize(new {error = exception.Message});
             context.Response.ContentType = MediaTypeNames.Application.Json;
             context.Response.StatusCode = (int)code;
-            _logger.LogError(exception.ToString());
+
             return context.Response.WriteAsync(result);
         }
     }
