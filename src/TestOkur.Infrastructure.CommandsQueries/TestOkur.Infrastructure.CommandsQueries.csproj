@@ -16,7 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CacheManager.Core" Version="1.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="3.1.2" />
     <PackageReference Include="Paramore.Brighter" Version="8.1.11" />
     <PackageReference Include="Paramore.Brighter.Extensions.DependencyInjection" Version="2.0.4" />
     <PackageReference Include="Paramore.Darker" Version="2.0.78" />
